@@ -156,7 +156,9 @@ public class Receiver {
                 }
             }
             String executeScriptDescription = "Execute script from file.";
+            String historyDescription = "History of your twelve last commands";
             text.append(String.format(formatString, "executeScript {file}", executeScriptDescription));
+            text.append(String.format(formatString, "history", historyDescription));
             return text.toString();
         } else {
             throw new WrongArgumentException("Help command must not contain arguments");

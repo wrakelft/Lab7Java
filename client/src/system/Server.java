@@ -39,20 +39,26 @@ public class Server {
             while (scanner.hasNextLine()) {
                 String command = scanner.nextLine().trim();
                 try {
-                    if (command.equals("register") || command.equals("login")) {
-                        AuthCommandsHandler(command, scanner);
-                    }if (command.equals("exit")) {
+                    if (command.equals("exit")) {
                         System.exit(1);
                     }
-                    try {
-                        if (Client.getInstance().isAuth()) {
-                            otherCommandHandler(command, scanner);
-                        } else {
-                            System.out.println("Unauthorized access. Please login or register to proceed.");
-                        }
-                    } catch (IllegalStateException e) {
-                        System.out.println("Error: " + e.getMessage());
+                    if (!Client.isAuth()) {
+                    if (command.equals("register") || command.equals("login")) {
+                        AuthCommandsHandler(command, scanner);
+                    }else {
+                        System.out.println("Unauthorized access. Please login or register to proceed.");
                     }
+                    } else {
+                        try {
+                            if (command.equals("register") || command.equals("login")) {
+                                System.out.println("You are already logged in");
+                                continue;
+                            }
+                                otherCommandHandler(command, scanner);
+                            } catch (IllegalStateException e) {
+                                System.out.println("Error: " + e.getMessage());
+                            }
+                        }
                 } catch (IOException e) {
                     System.out.println("Server is not availdable");
                     System.out.println(e.getMessage() + " " + e);
@@ -106,6 +112,8 @@ public class Server {
                 } else if (command.split(" ")[0].equals("updateId")) {
                     if (command.split(" ").length == 2) {
                         key = command.split(" ")[1];
+                    } else {
+                        throw new NoArgumentException("id");
                     }
                     vehicle = VehicleAsker.createVehicle();
                     vehicle.setId(Long.parseLong(key));
@@ -113,6 +121,8 @@ public class Server {
                     if (command.split(" ").length == 1) {
                         HistoryCommand.execute(lastTwelveCommands);
                         isClientCommand = true;
+                    } else {
+                        throw new WrongArgumentException(command.split(" ")[1]);
                     }
                 }
                 if (!isClientCommand) {

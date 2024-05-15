@@ -19,7 +19,7 @@ import java.util.stream.Collectors;
 
 public class PostgreSQLManager implements DBmanager {
     @Override
-    public HashSet<Vehicle> getCollectionFromDB() {
+    public Set<Vehicle> getCollectionFromDB() {
         HashSet<Vehicle> data = new HashSet<>();
 
         try (Connection connection = ConnectionFactory.getConnection();

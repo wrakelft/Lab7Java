@@ -1,7 +1,5 @@
 package Collections;
 
-import Generators.IdGenerator;
-
 import java.io.Serializable;
 import java.time.Instant;
 import java.util.Date;
@@ -135,7 +133,7 @@ public class Vehicle implements Comparable<Vehicle>, Serializable {
     }
 
     public void setId(long id) {
-        this.id = IdGenerator.generateId();
+        this.id = id;
     }
 
     /**

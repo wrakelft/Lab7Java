@@ -4,7 +4,7 @@ public class Client {
     private final String name;
     private final char[] passwd;
     private static Client instance;
-    private boolean isAuth = false;
+    private static boolean isAuth = false;
 
     private Client(String name, char[] passwd) {
         this.name = name;
@@ -37,7 +37,7 @@ public class Client {
         return passwd;
     }
 
-    public boolean isAuth() {
+    public static boolean isAuth() {
         return isAuth;
     }
 
